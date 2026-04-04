@@ -90,7 +90,9 @@ class TushareDownloadThread(QThread):
         if not token:
             raise ValueError("请输入Tushare Token")
         ts.set_token(token)
-        return ts.pro_api()
+        pro = ts.pro_api()
+        pro._DataApi__http_url = "http://tsy.xiaodefa.cn"
+        return pro
 
     def _get_db_path(self):
         """获取DuckDB数据库路径（自动检测）"""
@@ -120,8 +122,8 @@ class TushareDownloadThread(QThread):
             self.log_signal.emit("正在测试连接...")
 
             # 测试接口
-            df = pro.daily(ts_code='000001.SZ', trade_date='20240101', fields='ts_code,close')
-
+            # df = pro.daily(ts_code='000001.SZ', trade_date='20240101', fields='ts_code,close')
+            df = pro.daily(ts_code='000001.SZ', start_date='20260101', end_date='20260110')
             if df is not None and not df.empty:
                 self.log_signal.emit("✅ 连接测试成功！")
                 self.finished_signal.emit({'success': True, 'message': '连接成功'})
@@ -1339,6 +1341,7 @@ class TushareDataWidget(QWidget):
             import tushare as ts
             ts.set_token(token)
             pro = ts.pro_api()
+            pro._DataApi__http_url = "http://tsy.xiaodefa.cn"
             stock_list = pro.stock_basic(exchange='', list_status='L', fields='ts_code')
             symbols = stock_list['ts_code'].tolist()[:self.quick_stock_spin.value()]
         except Exception as e:
@@ -1502,6 +1505,7 @@ class TushareDataWidget(QWidget):
                 import tushare as ts
                 ts.set_token(token)
                 pro = ts.pro_api()
+                pro._DataApi__http_url = "http://tsy.xiaodefa.cn"
                 stock_list = pro.stock_basic(exchange='', list_status='L', fields='ts_code')
                 symbols = stock_list['ts_code'].tolist()
             except Exception as e:
@@ -1541,6 +1545,7 @@ class TushareDataWidget(QWidget):
             import tushare as ts
             ts.set_token(token)
             pro = ts.pro_api()
+            pro._DataApi__http_url = "http://tsy.xiaodefa.cn"
             stock_list = pro.stock_basic(exchange='', list_status='L', fields='ts_code')
             symbols = stock_list['ts_code'].tolist()
         except Exception as e:
@@ -1580,6 +1585,7 @@ class TushareDataWidget(QWidget):
             import tushare as ts
             ts.set_token(token)
             pro = ts.pro_api()
+            pro._DataApi__http_url = "http://tsy.xiaodefa.cn"
             stock_list = pro.stock_basic(exchange='', list_status='L', fields='ts_code')
             symbols = stock_list['ts_code'].tolist()[:100]  # 限制数量
         except Exception as e:
@@ -1619,6 +1625,7 @@ class TushareDataWidget(QWidget):
             import tushare as ts
             ts.set_token(token)
             pro = ts.pro_api()
+            pro._DataApi__http_url = "http://tsy.xiaodefa.cn"
             stock_list = pro.stock_basic(exchange='', list_status='L', fields='ts_code')
             symbols = stock_list['ts_code'].tolist()
         except Exception as e:

@@ -498,10 +498,10 @@ class TushareDownloadWidget(QWidget):
             import tushare as ts
             ts.set_token(token)
             pro = ts.pro_api()
-
+            pro._DataApi__http_url = "http://tsy.xiaodefa.cn"
             # 测试API调用
-            df = pro.trade_cal(exchange='SSE', start_date='20240101', end_date='20240110')
-
+            # df = pro.trade_cal(exchange='SSE', start_date='20240101', end_date='20240110')
+            df = pro.daily(ts_code='000001.SZ', start_date='20260101', end_date='20260110')
             if df is not None and len(df) > 0:
                 QMessageBox.information(self, "成功", f"✅ Tushare连接成功！\n\n获取到 {len(df)} 条交易日历数据")
                 self.log("✅ Tushare连接测试成功")

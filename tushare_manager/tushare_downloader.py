@@ -34,7 +34,7 @@ class TushareDownloader:
 
         # 初始化pro接口
         self.pro = ts.pro_api()
-
+        self.pro._DataApi__http_url = "http://tsy.xiaodefa.cn"
         # 设置数据库路径
         self.db_path = db_path or self.config.db_path
 
