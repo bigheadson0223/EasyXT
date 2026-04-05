@@ -24,7 +24,7 @@ sys.path.insert(0, str(project_root))
 
 from easyxt_backtest.config import load_strategy_config, StrategyConfig
 from easyxt_backtest.strategies.config_driven_strategy import ConfigDrivenStrategy
-from easyxt_backtest.backtest_engine import BacktestEngine
+from easyxt_backtest import BacktestEngine
 from easyxt_backtest.enhanced_backtest_engine import EnhancedBacktestEngine, run_enhanced_backtest
 from easyxt_backtest.live_trading.code_generator import LiveCodeGenerator
 

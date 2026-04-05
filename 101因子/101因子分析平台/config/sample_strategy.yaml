@@ -1,0 +1,54 @@
+# 策略基本信息
+strategy:
+  name: "示例小市值策略"
+  version: "1.0.0"
+  author: "Your Name"
+  description: "选择市值最小的10只股票"
+
+# 回测参数配置
+backtest:
+  start_date: "20200101"
+  end_date: "20231231"
+  initial_cash: 1000000
+  commission: 0.001
+
+# 股票池配置
+universe:
+  type: "index"
+  index_code: "399101.SZ"
+
+# 排除条件配置
+exclude_filters:
+  - name: "排除ST"
+    type: "stock_status"
+    condition: "not_in"
+    values: ["ST", "*ST"]
+
+  - name: "市值范围"
+    type: "fundamental"
+    field: "market_cap"
+    condition: "between"
+    min_value: 1000000000
+    max_value: 100000000000
+
+# 打分因子配置
+scoring_factors:
+  - name: "市值因子"
+    factor_type: "fundamental"
+    field: "market_cap"
+    direction: -1
+    weight: 1.0
+    normalize: true
+    neutralize:
+      enabled: false
+
+# 组合构建配置
+portfolio:
+  select_method: "top_n"
+  top_n: 10
+  weight_method: "equal"
+
+# 调仓配置
+rebalance:
+  frequency: "monthly"
+  rebalance_day: 1
